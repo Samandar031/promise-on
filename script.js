@@ -11,7 +11,6 @@ const getCountryInfo = function (country) {
   const request = new XMLHttpRequest();
   request.open('GET', `https://restcountries.com/v2/name/${country}`);
   request.send();
-  // console.log(request.responseText);
 
   request.addEventListener('load', function () {
     const [data] = JSON.parse(request.responseText);
@@ -51,61 +50,41 @@ function renderHtml(data, className) {
   countriesContainer.style.opacity = 1;
 }
 
-// getCountryInfo('china');
+const errorXabar = function (response, msg) {
+  if (!response.ok) {
+    throw new Error(`${msg}  ${response.status} ${response.statusText}`);
+  }
+};
+
+const qisqaJSON = function (url, msg) {
+  return fetch(url).then(response => {
+    errorXabar(response, msg);
+    return response.json();
+  });
+};
 
 const getCountryOne = function (country) {
-  fetch(`https://restcountries.com/v2/name/${country}`)
-    .then(
-      response => {
-        console.log(response.ok);
-
-        if (!response.ok) {
-          throw new Error(
-            `kiritilga davlatni topa olmadim  ${response.status} ${response.statusText}`
-          );
-        }
-
-        // 1.keladigan ma'lumotlarni deshifrlaydi va ozgin vaqt kutadi
-        return response.json();
-      }
-      // ,
-      // error => {
-      //   alert(error);
-      //   // 8.hatolardan saqlanib qolishning birinchi usuli
-      // }
-    )
+  qisqaJSON(
+    `https://restcountries.com/v2/name/${country}`,
+    'bu davlatni topa olmadim'
+  )
     .then(res => {
-      // 2.faqat arrayni o'zini olish uchun
       let [data] = res;
-      // 3.buni olib chiqish uchun tashqaridan butta funksiya olib ichkariga tenglab qo'yamizda
 
       renderHtml(data);
 
-      // 4.xato usulda borderslarni olib ko'ramiz chegaradoshlarini
-
       let border = data.borders[0];
-      console.log(borders);
 
-      // fetch(`https://restcountries.com/v2/alpha/${border}`)
-      //   .then(response => {
-      //     return response.json();
-      //   })
-      //   .then(res => {
-      //     renderHtml(res, 'neighbour');
-      //   });
-
-      // 5.to'gri usulini ko'rib chiqamiz
-      return fetch(`https://restcountries.com/v2/alpha/${border}`);
-    })
-    .then(responsive => {
-      return responsive.json();
+      return qisqaJSON(
+        `https://restcountries.com/v2/alpha/${border}`,
+        "qo'shni davlatni topa olmadim"
+      );
     })
     .then(res => {
       renderHtml(res);
     })
     .catch(error => {
       alert(error);
-      // lyuboyini xatoni ushlab qoladi
     })
     .finally(() => {
       alert('loadingni olib tashladim');
