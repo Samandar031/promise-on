@@ -14,6 +14,7 @@ const getCountryInfo = function (country) {
 
   request.addEventListener('load', function () {
     const [data] = JSON.parse(request.responseText);
+    console.log(request);
 
     renderHtml(data);
 
@@ -22,7 +23,6 @@ const getCountryInfo = function (country) {
       const request2 = new XMLHttpRequest();
       request2.open('GET', `https://restcountries.com/v2/alpha/${val}`);
       request2.send();
-
       request2.addEventListener('load', function () {
         const data2 = JSON.parse(request2.responseText);
         renderHtml(data2, 'neighbour');
@@ -91,4 +91,25 @@ const getCountryOne = function (country) {
     });
 };
 
-getCountryOne('uzbekistan');
+// getCountryInfo('eng');
+
+// BUGUNGI kunnni ishlari 4.04.2022
+
+console.log('sync1');
+setTimeout(() => {
+  console.log('sync3');
+});
+
+Promise.resolve('promise').then(res => console.log(res));
+console.log('sync2');
+
+console.time('l');
+// fetch('https://restcountries.com/v2/name/uzbekistan');
+console.log('sync1');
+setTimeout(() => {
+  console.log('sync3');
+});
+
+Promise.resolve('promise').then(res => console.log(res));
+console.log('sync2');
+console.timeEnd('l');
