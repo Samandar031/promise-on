@@ -95,21 +95,78 @@ const getCountryOne = function (country) {
 
 // BUGUNGI kunnni ishlari 4.04.2022
 
-console.log('sync1');
-setTimeout(() => {
-  console.log('sync3');
-});
+// console.log('sync1');
+// setTimeout(() => {
+//   console.log('sync3');
+// });
 
-Promise.resolve('promise').then(res => console.log(res));
-console.log('sync2');
+// Promise.resolve('promise').then(res => console.log(res));
+// console.log('sync2');
 
-console.time('l');
-// fetch('https://restcountries.com/v2/name/uzbekistan');
-console.log('sync1');
-setTimeout(() => {
-  console.log('sync3');
-});
+// console.time('l');
+// // fetch('https://restcountries.com/v2/name/uzbekistan');
+// console.log('sync1');
+// setTimeout(() => {
+//   console.log('sync3');
+// });
 
-Promise.resolve('promise').then(res => console.log(res));
-console.log('sync2');
-console.timeEnd('l');
+// Promise.resolve('promise').then(res => console.log(res));
+// console.log('sync2');
+// console.timeEnd('l');
+
+// const tanga = new Promise(function (resolve, reject) {
+//   setTimeout(() => {
+//     if (Math.random() >= 0.5) {
+//       resolve('siz ytdingiz');
+//     } else {
+//       reject('siz yutqazdingiz');
+//     }
+//   }, 2000);
+// });
+
+// tanga.then(
+//   res => console.log(res),
+//   err => console.log(err)
+// );
+
+let getPos = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(
+      function (e) {
+        resolve(e);
+      },
+      function () {
+        reject(new Error('Joylashuvni topa olmadim'));
+      }
+    );
+  });
+};
+
+const data = async function () {
+  let position = navigator.geolocation.getCurrentPosition(function (e) {
+    return e;
+  });
+
+  console.log(position);
+
+  let data2 = await fetch('https://restcountries.com/v2/name/uzbekistan');
+  // console.log(data2);
+
+  let [body] = await data2.json();
+
+  console.log(body);
+
+  renderHtml(body);
+
+  let border = body.borders[2];
+  let chegaradosh = await fetch(`https://restcountries.com/v2/alpha/${border}`);
+
+  console.log(chegaradosh);
+
+  let chegaradoshD = await chegaradosh.json();
+
+  renderHtml(chegaradoshD);
+  console.log(chegaradoshD, 'neighbour');
+};
+
+data();
