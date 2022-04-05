@@ -129,44 +129,89 @@ const getCountryOne = function (country) {
 //   err => console.log(err)
 // );
 
-let getPos = function () {
-  return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(
-      function (e) {
-        resolve(e);
-      },
-      function () {
-        reject(new Error('Joylashuvni topa olmadim'));
-      }
-    );
-  });
+// let getPos = function () {
+//   return new Promise(function (resolve, reject) {
+//     navigator.geolocation.getCurrentPosition(
+//       function (e) {
+//         resolve(e);
+//       },
+//       function () {
+//         reject(new Error('Joylashuvni topa olmadim'));
+//       }
+//     );
+//   });
+// };
+// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// const data = async function () {
+//   try{
+//     console.log(position);
+
+//     let data2 = await fetch('https://restcountries.com/v2/name/uzbekistan');
+//     // console.log(data2);
+
+//     let [body] = await data2.json();
+
+//     console.log(body);
+
+//     renderHtml(body);
+
+//     let border = body.borders[2];
+//     let chegaradosh = await fetch(`https://restcountries.com/v2/alpha/${border}`);
+
+//     console.log(chegaradosh);
+
+//     let chegaradoshD = await chegaradosh.json();
+
+//     renderHtml(chegaradoshD);
+//     console.log(chegaradoshD, 'neighbour');
+
+//   }catch(err => {
+//     alert(err)
+//   }
+// };
+
+// data();
+
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// const func = async function () {
+//   const data = await fetch('https://restcountries.com/v2/name/uzbekistan');
+
+//   const data2 = await data.json();
+//   return data2;
+// };
+
+// func().then(res => console.log(res));
+
+const getItem = async function () {
+  // let con1 = await fetch('https://restcountries.com/v2/name/uzbekistan');
+  // let json1 = await con1.json();
+
+  // let con2 = await fetch('https://restcountries.com/v2/name/usa');
+  // let json2 = await con2.json();
+
+  // let con3 = await fetch('https://restcountries.com/v2/name/russia');
+  // let json3 = await con3.json();
+
+  // console.log(json1, json2, json3);
+
+  const yil = Promise.all([
+    fetch('https://restcountries.com/v2/name/russia'),
+    fetch('https://restcountries.com/v2/name/usa'),
+    fetch('https://restcountries.com/v2/name/uzbekistan'),
+  ]);
+
+  let time = function (sec) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve('senda internet vashshe rasvo');
+      }, sec * 1000);
+    });
+  };
+
+  const data2 = await Promise.race([yil, time(0.2)]);
+
+  console.log(data2);
 };
 
-const data = async function () {
-  let position = navigator.geolocation.getCurrentPosition(function (e) {
-    return e;
-  });
-
-  console.log(position);
-
-  let data2 = await fetch('https://restcountries.com/v2/name/uzbekistan');
-  // console.log(data2);
-
-  let [body] = await data2.json();
-
-  console.log(body);
-
-  renderHtml(body);
-
-  let border = body.borders[2];
-  let chegaradosh = await fetch(`https://restcountries.com/v2/alpha/${border}`);
-
-  console.log(chegaradosh);
-
-  let chegaradoshD = await chegaradosh.json();
-
-  renderHtml(chegaradoshD);
-  console.log(chegaradoshD, 'neighbour');
-};
-
-data();
+getItem();
