@@ -218,3 +218,18 @@ const getItem = async function () {
 };
 
 getItem();
+
+const arr = [1, 2, 3, 4, 5, 6];
+
+let str = arr
+  .filter(val => {
+    val > 2;
+  })
+  .map(val => {
+    val * 10;
+  })
+  .reduce((yig, val) => {
+    return yig + val;
+  });
+
+console.log(str);
