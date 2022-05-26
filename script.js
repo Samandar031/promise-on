@@ -200,6 +200,7 @@ const getItem = async function () {
     fetch('https://restcountries.com/v2/name/usa'),
     fetch('https://restcountries.com/v2/name/uzbekistan'),
     fetch('https://restcountries.com/v2/name/russia'),
+    fetch('https://restcountries.com/v2/name/russia'),
     fetch('https://restcountries.com/v2/name/usa'),
     fetch('https://restcountries.com/v2/name/uzbekistan'),
     fetch('https://restcountries.com/v2/name/uzbekistan'),
